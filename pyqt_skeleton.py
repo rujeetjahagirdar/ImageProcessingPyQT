@@ -3,6 +3,7 @@ from PyQt4 import QtCore, QtGui, uic
 from skimage import util, io
 import qimage2ndarray
 import numpy as np
+import scipy.misc
 
 qtCreatorFile = "untitled.ui"  # Enter file here.
 qimg = QtGui.QImage()
@@ -21,6 +22,7 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         self.pushButton_3.clicked.connect(self.invert)
         self.pushButton.clicked.connect(self.verticalFlip)
         self.pushButton_5.clicked.connect(self.horiFlip)
+        self.pushButton_4.clicked.connect(self.saveImg)
 
     def openFile(self):
         """path = QtGui.QFileDialog.getOpenFileName(None, "Select Image")"""
@@ -74,6 +76,11 @@ class MyApp(QtGui.QMainWindow, Ui_MainWindow):
         self.label_2.setPixmap(pixmap2)
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
 
+    def saveImg(self):
+        print("save pressed")
+        imgArray = qimage2ndarray.rgb_view(qimg2)
+        print(imgArray)
+        io.imsave('output.jpg', imgArray)
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
